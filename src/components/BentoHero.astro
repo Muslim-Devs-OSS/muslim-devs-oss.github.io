@@ -1,0 +1,241 @@
+---
+const discordMembers = "5k+";
+const activeRepos = "12+";
+
+const featuredProjects = [
+  {
+    name: "Prayer Times API",
+    description: "Accurate salah times for any location worldwide",
+    icon: "schedule",
+    language: "Rust",
+    stars: "2.1k",
+    href: "#",
+  },
+  {
+    name: "Zakat Calculator",
+    description: "Nisab-aware calculator with multi-currency support",
+    icon: "calculate",
+    language: "React",
+    stars: "890",
+    href: "#",
+  },
+  {
+    name: "Quran.json",
+    description: "Complete Quran dataset with translations & tafsir",
+    icon: "menu_book",
+    language: "Go",
+    stars: "1.4k",
+    href: "#",
+  },
+  {
+    name: "Hadith Search Engine",
+    description: "Full-text search across major hadith collections",
+    icon: "search",
+    language: "Python",
+    stars: "640",
+    href: "#",
+  },
+  {
+    name: "Hijri Calendar",
+    description: "Islamic date converter with event reminders",
+    icon: "calendar_month",
+    language: "React",
+    stars: "520",
+    href: "#",
+  },
+];
+---
+
+<main class="flex-grow pt-[104px] pb-xl px-4 md:px-8 max-w-7xl mx-auto w-full">
+  <!-- Bento Grid Hero Section -->
+  <section
+    class="grid grid-cols-1 md:grid-cols-4 gap-gutter auto-rows-[minmax(180px,auto)]"
+  >
+    <!-- Large Mission Tile -->
+    <div
+      class="md:col-span-2 md:row-span-2 bg-surface-container-high rounded-xl border border-surface-container-highest p-8 md:p-12 flex flex-col justify-between relative overflow-hidden group hover:border-primary-container/30 hover:-translate-y-0.5 transition-all duration-300"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-primary-container/5 to-transparent pointer-events-none"
+      >
+      </div>
+      <div class="relative z-10 space-y-4">
+        <h1
+          class="text-5xl md:text-6xl lg:text-7xl font-bold text-on-surface tracking-tight leading-tight"
+        >
+          Building for the Ummah.
+        </h1>
+        <p class="text-lg md:text-xl text-on-surface-variant font-inter">
+          Open-source software developed with Ihsan (excellence). Empowering
+          communities through technology and faith.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 pt-4 pb-2">
+          <button
+            class="cursor-pointer bg-primary-container text-black px-8 py-3 rounded-lg font-bold text-base active:scale-95 transition-all shadow-[0_0_15px_rgba(0,255,133,0.3)] hover:shadow-[0_0_25px_rgba(0,255,133,0.5)]"
+          >
+            Join Us
+          </button>
+          <button
+            class="cursor-pointer bg-surface-container border border-surface-container-highest hover:border-primary-container/50 text-on-surface px-8 py-3 rounded-lg font-semibold text-base active:scale-95 transition-all hover:text-primary-container"
+          >
+            Explore Projects
+          </button>
+        </div>
+      </div>
+      <div class="relative z-10 mt-8">
+        <div
+          class="bg-surface-container/50 p-4 rounded-lg border border-surface-container-highest font-mono text-sm text-on-surface-variant backdrop-blur-sm"
+        >
+          <code>
+            <span class="text-primary-container">const</span> mission = {"{"}<br
+            />
+            &nbsp;&nbsp;values: ["Faith", "Excellence", "Community"],<br />
+            &nbsp;&nbsp;action: "Code for good"<br />
+            {"}"};
+          </code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Tile -->
+    <div
+      class="md:col-span-1 md:row-span-1 bg-surface-container-high rounded-xl border border-surface-container-highest p-md flex flex-col justify-between hover:border-primary-container/30 hover:-translate-y-0.5 transition-all duration-300 group"
+    >
+      <div class="flex justify-between items-start">
+        <span
+          class="material-symbols-outlined text-primary-container text-[32px]"
+          >groups</span
+        >
+        <span
+          class="text-sm text-on-surface-variant group-hover:text-primary-container transition-colors font-medium"
+          >Discord</span
+        >
+      </div>
+      <div class="mt-4">
+        <h2 class="text-2xl font-semibold text-on-surface mb-2">Community</h2>
+        <p class="text-base text-on-surface-variant mb-4">
+          Join {discordMembers} developers worldwide.
+        </p>
+        <button
+          class="cursor-pointer w-full bg-transparent border border-primary-container text-primary-container py-2 rounded-lg text-sm font-medium hover:bg-primary-container/10 transition-colors"
+        >
+          Join Now
+        </button>
+      </div>
+    </div>
+
+    <!-- Spiritual Tile (Ihsan) -->
+    <div
+      class="md:col-span-1 md:row-span-1 bg-surface-container-high rounded-xl border border-surface-container-highest p-md flex flex-col items-center justify-center text-center relative overflow-hidden hover:border-primary-container/30 hover:-translate-y-0.5 transition-all duration-300"
+    >
+      <div
+        class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none"
+      >
+        <span class="material-symbols-outlined text-[150px]">star_rate</span>
+      </div>
+      <span
+        class="material-symbols-outlined text-primary-container text-[48px] mb-4"
+        >brightness_4</span
+      >
+      <h3 class="text-2xl font-semibold text-on-surface">Ihsan</h3>
+      <p
+        class="text-sm text-on-surface-variant tracking-widest uppercase mt-2 font-medium"
+      >
+        Excellence
+      </p>
+    </div>
+
+    <!-- Projects Tile -->
+    <div
+      class="md:col-span-2 md:row-span-2 bg-surface-container-high rounded-xl border-t-2 border-t-primary-container border-x border-b border-surface-container-highest p-md flex flex-col overflow-hidden hover:border-primary-container/30 hover:-translate-y-0.5 transition-all duration-300"
+    >
+      <!-- Header -->
+      <div class="mb-4">
+        <div class="flex items-center space-x-2 mb-2">
+          <span
+            class="bg-primary-container/10 text-primary-container px-2 py-1 rounded-full text-[10px] uppercase tracking-wider font-medium"
+            >Featured</span
+          >
+          <h2 class="text-2xl font-semibold text-on-surface">Open Projects</h2>
+        </div>
+        <p class="text-base text-on-surface-variant mb-3">
+          Contribute to prayer APIs, Zakat calculators, and more.
+        </p>
+        <a
+          class="cursor-pointer text-sm text-primary-container inline-flex items-center hover:underline font-medium"
+          href="#"
+        >
+          Explore Repositories
+          <span class="material-symbols-outlined ml-1 text-[18px]"
+            >arrow_forward</span
+          >
+        </a>
+      </div>
+
+      <!-- Featured Project List -->
+      <div class="flex flex-col gap-2 flex-1">
+        {featuredProjects.map((project) => (
+          <a
+            href={project.href}
+            class="cursor-pointer flex items-center justify-between bg-surface-container/60 border border-surface-container-highest rounded-lg px-4 py-2.5 hover:border-primary-container/40 transition-all group/proj"
+          >
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">{project.icon}</span>
+              <div class="min-w-0">
+                <p class="text-sm font-semibold text-on-surface truncate group-hover/proj:text-primary-container transition-colors">{project.name}</p>
+                <p class="text-xs text-on-surface-variant truncate">{project.description}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 shrink-0 ml-4">
+              <span class="bg-primary-container/10 text-primary-container px-2 py-0.5 rounded-full font-mono text-[11px]">{project.language}</span>
+              <span class="text-on-surface-variant text-xs flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">star</span> {project.stars}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Statistics Tile -->
+    <div
+      class="md:col-span-1 md:row-span-1 bg-surface-container-high rounded-xl border border-surface-container-highest p-md flex flex-col justify-center hover:border-primary-container/30 hover:-translate-y-0.5 transition-all duration-300"
+    >
+      <div
+        class="text-primary-container text-5xl font-bold tracking-tight mb-2"
+      >
+        {activeRepos}
+      </div>
+      <div class="text-sm text-on-surface-variant font-medium">
+        Active Open Source Repositories
+      </div>
+    </div>
+
+    <!-- Tech Stack Tile -->
+    <div
+      class="md:col-span-1 md:row-span-1 bg-surface-container-high rounded-xl border border-surface-container-highest p-md flex flex-col justify-between hover:border-primary-container/30 hover:-translate-y-0.5 transition-all duration-300"
+    >
+      <h3 class="text-sm text-on-surface-variant mb-4 font-medium">
+        Our Stack
+      </h3>
+      <div class="flex flex-wrap gap-2">
+        <span
+          class="bg-primary-container/10 text-primary-container px-3 py-1 rounded-full font-mono text-sm"
+          >Rust</span
+        >
+        <span
+          class="bg-primary-container/10 text-primary-container px-3 py-1 rounded-full font-mono text-sm"
+          >Go</span
+        >
+        <span
+          class="bg-primary-container/10 text-primary-container px-3 py-1 rounded-full font-mono text-sm"
+          >React</span
+        >
+        <span
+          class="bg-primary-container/10 text-primary-container px-3 py-1 rounded-full font-mono text-sm"
+          >Python</span
+        >
+      </div>
+    </div>
+  </section>
+</main>
