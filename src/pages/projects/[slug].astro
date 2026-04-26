@@ -131,7 +131,7 @@ const projectSchema = {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#121414" />
 
@@ -173,7 +173,7 @@ const projectSchema = {
       />
     </noscript>
   </head>
-  <body class="bg-background text-on-background min-h-screen flex flex-col font-inter antialiased">
+  <body class="bg-background text-on-background min-h-screen flex flex-col font-inter antialiased overflow-x-hidden w-full">
     <Navbar />
 
     <main class="w-full max-w-6xl mx-auto px-6 md:px-10 pt-32 pb-20 flex-1">
