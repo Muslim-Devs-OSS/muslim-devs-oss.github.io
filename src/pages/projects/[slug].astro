@@ -1,0 +1,320 @@
+---
+import "../../styles/global.css";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { marked } from "marked";
+import { projects, toProjectSlug, type Project } from "../../data/projects";
+
+interface ProjectDetailsProps {
+  project: Project;
+}
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: toProjectSlug(project) },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props as ProjectDetailsProps;
+
+function isAbsoluteUrl(value: string): boolean {
+  return /^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(value);
+}
+
+function toAbsoluteUrl(value: string, baseUrl: string): string {
+  if (!value || isAbsoluteUrl(value)) {
+    return value;
+  }
+
+  try {
+    return new URL(value, baseUrl).toString();
+  } catch {
+    return value;
+  }
+}
+
+function rewriteSrcset(srcset: string, baseUrl: string): string {
+  return srcset
+    .split(",")
+    .map((entry) => {
+      const trimmed = entry.trim();
+      if (!trimmed) {
+        return trimmed;
+      }
+
+      const [url, ...descriptors] = trimmed.split(/\s+/);
+      const absoluteUrl = toAbsoluteUrl(url, baseUrl);
+      return [absoluteUrl, ...descriptors].join(" ");
+    })
+    .join(", ");
+}
+
+function rewriteReadmeUrls(html: string, markdownUrl: string): string {
+  return html.replace(/\b(src|href|srcset)=(["'])(.*?)\2/gi, (match, attrName, quote, value) => {
+    const lowerAttrName = String(attrName).toLowerCase();
+    const rewrittenValue =
+      lowerAttrName === "srcset"
+        ? rewriteSrcset(value, markdownUrl)
+        : toAbsoluteUrl(value, markdownUrl);
+
+    if (rewrittenValue === value) {
+      return match;
+    }
+
+    return `${attrName}=${quote}${rewrittenValue}${quote}`;
+  });
+}
+
+async function getReadmeHtml(markdownUrl: string): Promise<string | null> {
+  try {
+    const response = await fetch(markdownUrl);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const markdown = await response.text();
+    const html = await marked.parse(markdown);
+    return rewriteReadmeUrls(html, markdownUrl);
+  } catch {
+    return null;
+  }
+}
+
+const readmeHtml = await getReadmeHtml(project.projectMarkdownLink);
+---
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content={`Details and README for ${project.projectName} from Muslim Devs Open Source.`}
+    />
+    <title>{project.projectName} | Projects</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-background text-on-background min-h-screen flex flex-col font-inter antialiased">
+    <Navbar />
+
+    <main class="w-full max-w-6xl mx-auto px-6 md:px-10 pt-32 pb-20 flex-1">
+      <a href="/projects" class="inline-flex items-center text-sm text-secondary hover:text-primary-container transition-colors">
+        &larr; Back to Projects
+      </a>
+
+      <section class="mt-6 bg-surface-container border border-surface-container-highest rounded-2xl p-6 md:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">{project.projectName}</h1>
+          <span
+            class:list={[
+              "text-xs font-medium px-3 py-1 rounded-full border",
+              project.projectType === "Featured"
+                ? "bg-primary-container/10 text-primary-container border-primary-container/40"
+                : "bg-secondary-container/25 text-secondary border-secondary/40",
+            ]}
+          >
+            {project.projectType}
+          </span>
+        </div>
+
+        <p class="mt-4 text-on-surface-variant leading-relaxed">{project.projectDescription}</p>
+
+        <div class="mt-5">
+          <p class="text-sm text-on-surface-variant mb-2">Tech Stack</p>
+          <div class="flex flex-wrap gap-2">
+            {project.techStack.map((tech) => (
+              <span class="text-xs bg-surface-container-high px-2.5 py-1 rounded-md border border-surface-container-highest">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          {
+            project.projectWebsite ? (
+              <a
+                href={project.projectWebsite}
+                class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-secondary/50 text-secondary hover:text-primary-container hover:border-primary-container/50 transition-colors text-sm"
+                target="_blank"
+                rel="noreferrer"
+              >
+                View Website
+              </a>
+            ) : (
+              <span class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-surface-bright text-on-surface-variant/70 text-sm cursor-not-allowed" aria-disabled="true">
+                View Website
+              </span>
+            )
+          }
+
+          <a
+            href={project.projectGithub}
+            class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-secondary/50 text-secondary hover:text-primary-container hover:border-primary-container/50 transition-colors text-sm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View Github
+          </a>
+
+        </div>
+      </section>
+
+      <section class="mt-8 bg-surface-container border border-surface-container-highest rounded-2xl p-5 md:p-8">
+        <h2 class="text-xl md:text-2xl font-semibold tracking-tight mb-5">README</h2>
+
+        {
+          readmeHtml ? (
+            <article class="github-readme" set:html={readmeHtml} />
+          ) : (
+            <p class="text-on-surface-variant leading-relaxed">
+              README could not be loaded from the markdown link right now.
+            </p>
+          )
+        }
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  .github-readme {
+    color: var(--color-on-surface);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .github-readme h1,
+  .github-readme h2,
+  .github-readme h3,
+  .github-readme h4 {
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 1.6em;
+    margin-bottom: 0.7em;
+    border-bottom: 1px solid var(--color-outline-variant);
+    padding-bottom: 0.3em;
+  }
+
+  .github-readme h1 {
+    font-size: 2rem;
+  }
+
+  .github-readme h2 {
+    font-size: 1.6rem;
+  }
+
+  .github-readme h3 {
+    font-size: 1.3rem;
+  }
+
+  .github-readme p,
+  .github-readme ul,
+  .github-readme ol,
+  .github-readme blockquote,
+  .github-readme table {
+    margin: 0.9em 0;
+  }
+
+  .github-readme a {
+    color: var(--color-primary-container);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .github-readme img {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--color-outline-variant);
+  }
+
+  .github-readme img[src*="shields.io"] {
+    border: 0;
+    border-radius: 0;
+  }
+
+  .github-readme [align="center"] p {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0.65rem 0;
+  }
+
+  .github-readme [align="center"] p > a {
+    display: inline-flex !important;
+    width: auto !important;
+    margin: 0;
+  }
+
+  .github-readme [align="center"] p br {
+    display: none;
+  }
+
+  .github-readme code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    background: var(--color-surface-container-high);
+    border: 1px solid var(--color-outline-variant);
+    border-radius: 6px;
+    padding: 0.15em 0.35em;
+  }
+
+  .github-readme pre {
+    background: var(--color-surface-container-low);
+    border: 1px solid var(--color-outline-variant);
+    border-radius: 12px;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  .github-readme pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-size: 0.9em;
+  }
+
+  .github-readme blockquote {
+    border-left: 4px solid var(--color-outline);
+    padding-left: 1rem;
+    color: var(--color-on-surface-variant);
+  }
+
+  .github-readme table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .github-readme th,
+  .github-readme td {
+    border: 1px solid var(--color-outline-variant);
+    padding: 0.55rem 0.7rem;
+    text-align: left;
+  }
+
+  .github-readme hr {
+    border: 0;
+    border-top: 1px solid var(--color-outline-variant);
+    margin: 1.2rem 0;
+  }
+</style>
