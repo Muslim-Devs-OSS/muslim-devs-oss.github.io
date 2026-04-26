@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
 import BentoHero from "../components/BentoHero.astro";
 ---
 
@@ -20,7 +21,7 @@ import BentoHero from "../components/BentoHero.astro";
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap"
 			rel="stylesheet"
 		/>
 
@@ -33,6 +34,7 @@ import BentoHero from "../components/BentoHero.astro";
 	<body
 		class="bg-background text-on-background min-h-screen flex flex-col font-inter antialiased"
 	>
+		<Navbar />
 		<BentoHero />
 	</body>
 </html>

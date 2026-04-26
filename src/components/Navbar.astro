@@ -1,0 +1,64 @@
+---
+interface NavLink {
+  label: string;
+  href: string;
+  active?: boolean;
+}
+
+const leftLinks: NavLink[] = [
+  { label: "Home", href: "/", active: true },
+  { label: "Projects", href: "/projects" },
+];
+
+const rightLinks: NavLink[] = [
+  { label: "Join Community", href: "#" },
+  { label: "View Github", href: "#" },
+];
+---
+
+<nav
+  class="fixed top-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-7xl z-50 bg-surface-container-high/80 backdrop-blur-lg rounded-full border border-surface-container-highest shadow-[0_4px_20px_rgba(0,255,133,0.1)] px-8 flex items-center justify-between h-16 transition-all duration-300"
+>
+  <!-- Left Navigation Links -->
+  <div class="flex items-center gap-8 w-1/3">
+    {
+      leftLinks.map((link) => (
+        <a
+          class:list={[
+            "font-inter tracking-tight text-sm font-medium transition-all duration-300 active:scale-95 cursor-pointer",
+            link.active
+              ? "text-primary-container border-b border-primary-container pb-1 hover:text-primary-fixed"
+              : "text-on-surface-variant hover:text-primary-container",
+          ]}
+          href={link.href}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+
+  <!-- Center Brand Logo -->
+  <div class="flex justify-center w-1/3">
+    <a
+      class="font-mono font-bold text-primary-container text-xl tracking-tighter hover:text-primary-fixed transition-colors duration-300"
+      href="/"
+    >
+      &lt; Muslim Devs /&gt;
+    </a>
+  </div>
+
+  <!-- Right Navigation Links -->
+  <div class="flex items-center justify-end gap-8 w-1/3">
+    {
+      rightLinks.map((link) => (
+        <a
+          class="font-inter tracking-tight text-sm font-medium text-on-surface-variant hover:text-primary-container transition-all duration-300 active:scale-95 cursor-pointer"
+          href={link.href}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+</nav>
