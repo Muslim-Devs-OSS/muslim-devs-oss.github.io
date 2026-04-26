@@ -8,5 +8,5 @@ export default defineConfig({
         plugins: [tailwindcss()]
     },
     site: "https://muslim-devs-oss.github.io",
-    base: "/website",
+    base: "/",
 });
