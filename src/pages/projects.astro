@@ -2,28 +2,52 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import SeoHead from "../components/SeoHead.astro";
 import { projects, toProjectSlug } from "../data/projects";
 
 const projectsWithSlug = projects.map((project) => ({
   ...project,
   projectSlug: toProjectSlug(project),
 }));
+
+const siteOrigin = Astro.site?.toString() ?? "https://muslim-devs-oss.github.io";
+const pageTitle = "Projects | Muslim Devs Open Source";
+const pageDescription =
+  "Browse Muslim Devs Open Source projects, explore each README, and jump to live websites and GitHub repositories.";
+
+const projectsCollectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: pageTitle,
+  description: pageDescription,
+  url: new URL("/projects", siteOrigin).toString(),
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: projectsWithSlug.map((project, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: project.projectName,
+      url: new URL(`/projects/${project.projectSlug}`, siteOrigin).toString(),
+    })),
+  },
+};
 ---
 
 <html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
+    <SeoHead
+      title={pageTitle}
+      description={pageDescription}
+      structuredData={projectsCollectionSchema}
+    />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta
-      name="description"
-      content="Browse Muslim Devs Open Source projects and jump to each README, website, and GitHub repository."
-    />
-    <title>Projects | Muslim Devs Open Source</title>
+    <meta name="theme-color" content="#121414" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

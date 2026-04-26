@@ -2,6 +2,7 @@
 import "../../styles/global.css";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+import SeoHead from "../../components/SeoHead.astro";
 import { marked } from "marked";
 import { projects, toProjectSlug, type Project } from "../../data/projects";
 
@@ -87,20 +88,52 @@ async function getReadmeHtml(markdownUrl: string): Promise<string | null> {
 }
 
 const readmeHtml = await getReadmeHtml(project.projectMarkdownLink);
+
+const siteOrigin = Astro.site?.toString() ?? "https://muslim-devs-oss.github.io";
+const projectSlug = toProjectSlug(project);
+const pageTitle = `${project.projectName} | Projects | Muslim Devs Open Source`;
+const pageDescription =
+  project.projectDescription || `Details and README for ${project.projectName}.`;
+
+const sameAsLinks = [
+  project.projectWebsite,
+  project.projectGithub,
+  project.projectGithubSecondary,
+].filter((value): value is string => Boolean(value));
+
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  name: project.projectName,
+  description: pageDescription,
+  url: new URL(`/projects/${projectSlug}`, siteOrigin).toString(),
+  creator: project.projectAuthor
+    ? { "@type": "Person", name: project.projectAuthor }
+    : { "@type": "Organization", name: "Muslim Devs Open Source" },
+  programmingLanguage: project.techStack,
+  ...(project.projectGithub
+    ? { codeRepository: project.projectGithub }
+    : {}),
+  ...(sameAsLinks.length ? { sameAs: sameAsLinks } : {}),
+};
 ---
 
 <html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <SeoHead
+      title={pageTitle}
+      description={pageDescription}
+      type="article"
+      structuredData={projectSchema}
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta
-      name="description"
-      content={`Details and README for ${project.projectName} from Muslim Devs Open Source.`}
-    />
-    <title>{project.projectName} | Projects</title>
+    <meta name="theme-color" content="#121414" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

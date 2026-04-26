@@ -1,0 +1,55 @@
+---
+interface JsonLd {
+  [key: string]: unknown;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  structuredData?: JsonLd | JsonLd[];
+}
+
+const {
+  title,
+  description,
+  image = "/android-chrome-512x512.png",
+  type = "website",
+  noindex = false,
+  structuredData = [],
+} = Astro.props;
+
+const fallbackOrigin = "https://muslim-devs-oss.github.io";
+const siteOrigin = Astro.site?.toString() ?? fallbackOrigin;
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+const imageUrl = image.startsWith("http")
+  ? image
+  : new URL(image, siteOrigin).toString();
+
+const schemaItems = (Array.isArray(structuredData)
+  ? structuredData
+  : [structuredData]
+).filter((item) => item && Object.keys(item).length > 0);
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="alternate" hreflang="en" href={canonicalUrl} />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content="Muslim Devs Open Source" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+{schemaItems.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}

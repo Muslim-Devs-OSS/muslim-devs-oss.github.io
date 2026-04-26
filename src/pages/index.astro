@@ -4,22 +4,54 @@ import Navbar from "../components/Navbar.astro";
 import TerminalHero from "../components/TerminalHero.astro";
 import BentoHero from "../components/BentoHero.astro";
 import Footer from "../components/Footer.astro";
+import SeoHead from "../components/SeoHead.astro";
+
+const siteOrigin = Astro.site?.toString() ?? "https://muslim-devs-oss.github.io";
+const pageTitle = "Muslim Devs Open Source | Build for the Ummah";
+const pageDescription =
+	"Muslim Devs Open Source builds software for the Ummah with Ihsan. Explore projects, contribute to open source, and join our global community.";
+
+const organizationSchema = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	name: "Muslim Devs Open Source",
+	url: siteOrigin,
+	logo: new URL("/android-chrome-512x512.png", siteOrigin).toString(),
+	sameAs: [
+		"https://github.com/Muslim-Devs-OSS/",
+		"https://discord.com/invite/RCVW5Es6pQ",
+	],
+};
+
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: "Muslim Devs Open Source",
+	url: siteOrigin,
+	inLanguage: "en",
+	description: pageDescription,
+	publisher: {
+		"@type": "Organization",
+		name: "Muslim Devs Open Source",
+	},
+};
 ---
 
 <html class="dark" lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<SeoHead
+			title={pageTitle}
+			description={pageDescription}
+			structuredData={[organizationSchema, websiteSchema]}
+		/>
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<meta
-			name="description"
-			content="Muslim Devs Open Source - Building software for the Ummah with Ihsan (excellence). Explore our open-source projects, join the community, and contribute."
-		/>
-		<title>Muslim Devs Open Source</title>
+		<meta name="theme-color" content="#121414" />
 
 		<!-- Google Fonts: Inter -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
