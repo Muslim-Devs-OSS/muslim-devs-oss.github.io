@@ -24,6 +24,8 @@ const {
 const fallbackOrigin = "https://muslim-devs-oss.github.io";
 const siteOrigin = Astro.site?.toString() ?? fallbackOrigin;
 const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+const canonicalOrigin = new URL(siteOrigin).origin;
+const canonicalHost = new URL(siteOrigin).host;
 const imageUrl = image.startsWith("http")
   ? image
   : new URL(image, siteOrigin).toString();
@@ -51,5 +53,14 @@ const schemaItems = (Array.isArray(structuredData)
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl} />
+
+<script is:inline define:vars={{ canonicalOrigin, canonicalHost }}>
+  const current = window.location;
+  const isLocalhost = current.hostname === "localhost" || current.hostname === "127.0.0.1";
+
+  if (!isLocalhost && (current.protocol !== "https:" || current.host !== canonicalHost)) {
+    window.location.replace(canonicalOrigin + current.pathname + current.search + current.hash);
+  }
+</script>
 
 {schemaItems.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
