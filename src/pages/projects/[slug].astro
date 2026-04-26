@@ -67,6 +67,10 @@ function rewriteReadmeUrls(html: string, markdownUrl: string): string {
 }
 
 async function getReadmeHtml(markdownUrl: string): Promise<string | null> {
+  if (!markdownUrl) {
+    return null;
+  }
+
   try {
     const response = await fetch(markdownUrl);
 
@@ -130,6 +134,16 @@ const readmeHtml = await getReadmeHtml(project.projectMarkdownLink);
 
         <p class="mt-4 text-on-surface-variant leading-relaxed">{project.projectDescription}</p>
 
+        {
+          project.projectAuthor && (
+            <p class="mt-3 text-sm text-on-surface-variant/90">
+              <span class="text-primary-container font-medium">Author:</span>
+              {" "}
+              {project.projectAuthor}
+            </p>
+          )
+        }
+
         <div class="mt-5">
           <p class="text-sm text-on-surface-variant mb-2">Tech Stack</p>
           <div class="flex flex-wrap gap-2">
@@ -159,14 +173,35 @@ const readmeHtml = await getReadmeHtml(project.projectMarkdownLink);
             )
           }
 
-          <a
-            href={project.projectGithub}
-            class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-secondary/50 text-secondary hover:text-primary-container hover:border-primary-container/50 transition-colors text-sm"
-            target="_blank"
-            rel="noreferrer"
-          >
-            View Github
-          </a>
+          {
+            project.projectGithub ? (
+              <a
+                href={project.projectGithub}
+                class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-secondary/50 text-secondary hover:text-primary-container hover:border-primary-container/50 transition-colors text-sm"
+                target="_blank"
+                rel="noreferrer"
+              >
+                View Github
+              </a>
+            ) : (
+              <span class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-surface-bright text-on-surface-variant/70 text-sm cursor-not-allowed" aria-disabled="true">
+                Repo Not Open Yet
+              </span>
+            )
+          }
+
+          {
+            project.projectGithubSecondary && (
+              <a
+                href={project.projectGithubSecondary}
+                class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-secondary/50 text-secondary hover:text-primary-container hover:border-primary-container/50 transition-colors text-sm"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {project.projectGithubSecondaryLabel || "View Secondary Repo"}
+              </a>
+            )
+          }
 
         </div>
       </section>
@@ -179,7 +214,7 @@ const readmeHtml = await getReadmeHtml(project.projectMarkdownLink);
             <article class="github-readme" set:html={readmeHtml} />
           ) : (
             <p class="text-on-surface-variant leading-relaxed">
-              README could not be loaded from the markdown link right now.
+              README is not available for this project yet.
             </p>
           )
         }

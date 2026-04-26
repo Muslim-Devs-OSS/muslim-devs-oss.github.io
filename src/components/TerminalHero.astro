@@ -1,5 +1,6 @@
 ---
-
+const githubOrgUrl = "https://github.com/Muslim-Devs-OSS/";
+const discordInviteUrl = "https://discord.com/invite/RCVW5Es6pQ";
 ---
 
 <section
@@ -54,18 +55,24 @@
       </p>
 
       <div class="flex items-center gap-sm mt-md">
-        <button
+        <a
           class="cursor-pointer px-8 py-3 bg-primary-container text-on-primary-container hover:bg-primary transition-colors rounded text-sm font-medium flex items-center gap-2 active:scale-95 transition-all"
+          href={discordInviteUrl}
+          target="_blank"
+          rel="noreferrer"
         >
           <span class="material-symbols-outlined">forum</span>
           Join Discord
-        </button>
-        <button
+        </a>
+        <a
           class="cursor-pointer px-8 py-3 bg-transparent text-primary-container border border-primary-container hover:bg-primary-container/10 transition-colors rounded text-sm font-medium flex items-center gap-2 active:scale-95 transition-all"
+          href={githubOrgUrl}
+          target="_blank"
+          rel="noreferrer"
         >
           <span class="material-symbols-outlined">code</span>
           View GitHub
-        </button>
+        </a>
       </div>
     </div>
 

@@ -1,47 +1,33 @@
 ---
-const discordMembers = "5k+";
-const activeRepos = "12+";
+const discordMembers = "500+";
+const activeRepos = "2+";
+const githubOrgUrl = "https://github.com/Muslim-Devs-OSS/";
+const discordInviteUrl = "https://discord.com/invite/RCVW5Es6pQ";
 
 const featuredProjects = [
   {
-    name: "Prayer Times API",
-    description: "Accurate salah times for any location worldwide",
-    icon: "schedule",
-    language: "Rust",
-    stars: "2.1k",
-    href: "#",
+    name: "Poise Voice Isolator / Music Blocker",
+    description: "Real-time AI audio filter removing music/background noise from system audio.",
+    icon: "graphic_eq",
+    language: "AI/ML",
+    stars: "2 repos",
+    href: "https://github.com/chabandou/poise-voice-isolator",
   },
   {
-    name: "Zakat Calculator",
-    description: "Nisab-aware calculator with multi-currency support",
-    icon: "calculate",
-    language: "React",
-    stars: "890",
-    href: "#",
+    name: "daee-epistemics.SKILL",
+    description: "Epistemic milieu navigator .SKILL for Claude and other LLM assistants.",
+    icon: "psychology",
+    language: "Prompting",
+    stars: "open",
+    href: "https://github.com/theislampill/daee-epistemics",
   },
   {
-    name: "Quran.json",
-    description: "Complete Quran dataset with translations & tafsir",
-    icon: "menu_book",
+    name: "Fi 'l-afaq (filafaq)",
+    description: "Islamic database website built with Go, HTMX, AlpineJS, Templ, and PostgreSQL.",
+    icon: "travel_explore",
     language: "Go",
-    stars: "1.4k",
-    href: "#",
-  },
-  {
-    name: "Hadith Search Engine",
-    description: "Full-text search across major hadith collections",
-    icon: "search",
-    language: "Python",
-    stars: "640",
-    href: "#",
-  },
-  {
-    name: "Hijri Calendar",
-    description: "Islamic date converter with event reminders",
-    icon: "calendar_month",
-    language: "React",
-    stars: "520",
-    href: "#",
+    stars: "repo private",
+    href: "https://filafaq.net",
   },
 ];
 ---
@@ -70,16 +56,20 @@ const featuredProjects = [
           communities through technology and faith.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 pt-4 pb-2">
-          <button
+          <a
             class="cursor-pointer bg-primary-container text-black px-8 py-3 rounded-lg font-bold text-base active:scale-95 transition-all shadow-[0_0_15px_rgba(0,255,133,0.3)] hover:shadow-[0_0_25px_rgba(0,255,133,0.5)]"
+            href={discordInviteUrl}
+            target="_blank"
+            rel="noreferrer"
           >
             Join Us
-          </button>
-          <button
+          </a>
+          <a
             class="cursor-pointer bg-surface-container border border-surface-container-highest hover:border-primary-container/50 text-on-surface px-8 py-3 rounded-lg font-semibold text-base active:scale-95 transition-all hover:text-primary-container"
+            href="/projects"
           >
             Explore Projects
-          </button>
+          </a>
         </div>
       </div>
       <div class="relative z-10 mt-8">
@@ -116,11 +106,14 @@ const featuredProjects = [
         <p class="text-base text-on-surface-variant mb-4">
           Join {discordMembers} developers worldwide.
         </p>
-        <button
+        <a
           class="cursor-pointer w-full bg-transparent border border-primary-container text-primary-container py-2 rounded-lg text-sm font-medium hover:bg-primary-container/10 transition-colors"
+          href={discordInviteUrl}
+          target="_blank"
+          rel="noreferrer"
         >
           Join Now
-        </button>
+        </a>
       </div>
     </div>
 
@@ -159,11 +152,13 @@ const featuredProjects = [
           <h2 class="text-2xl font-semibold text-on-surface">Open Projects</h2>
         </div>
         <p class="text-base text-on-surface-variant mb-3">
-          Contribute to prayer APIs, Zakat calculators, and more.
+          Explore the active Muslim Devs OSS projects and build with purpose.
         </p>
         <a
           class="cursor-pointer text-sm text-primary-container inline-flex items-center hover:underline font-medium"
-          href="#"
+          href={githubOrgUrl}
+          target="_blank"
+          rel="noreferrer"
         >
           Explore Repositories
           <span class="material-symbols-outlined ml-1 text-[18px]"
@@ -178,6 +173,8 @@ const featuredProjects = [
           <a
             href={project.href}
             class="cursor-pointer flex items-center justify-between bg-surface-container/60 border border-surface-container-highest rounded-lg px-4 py-2.5 hover:border-primary-container/40 transition-all group/proj"
+            target="_blank"
+            rel="noreferrer"
           >
             <div class="flex items-center gap-3 min-w-0">
               <span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">{project.icon}</span>

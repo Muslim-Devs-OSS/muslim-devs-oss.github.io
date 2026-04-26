@@ -4,6 +4,9 @@ interface NavLink {
   href: string;
 }
 
+const githubOrgUrl = "https://github.com/Muslim-Devs-OSS/";
+const discordInviteUrl = "https://discord.com/invite/RCVW5Es6pQ";
+
 const currentPath = Astro.url.pathname;
 
 const leftLinks: NavLink[] = [
@@ -12,8 +15,8 @@ const leftLinks: NavLink[] = [
 ];
 
 const rightLinks: NavLink[] = [
-  { label: "Join Community", href: "#" },
-  { label: "View Github", href: "#" },
+  { label: "Join Community", href: discordInviteUrl },
+  { label: "View Github", href: githubOrgUrl },
 ];
 ---
 
@@ -65,6 +68,8 @@ const rightLinks: NavLink[] = [
         <a
           class="font-inter tracking-tight text-sm font-medium text-on-surface-variant hover:text-primary-container transition-all duration-300 active:scale-95 cursor-pointer"
           href={link.href}
+          target="_blank"
+          rel="noreferrer"
         >
           {link.label}
         </a>
