@@ -6,5 +6,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
     vite: {
         plugins: [tailwindcss()]
-    }
+    },
+    site: "https://muslim-devs-oss.github.io",
+    base: "/",
 });
